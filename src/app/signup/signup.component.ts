@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
 
+  accountTypes: string[] = ['Basic', 'Advanced', 'Pro'];
+  selectedAccountType: string;
+
   constructor() { }
 
   ngOnInit() {
+    this.selectedAccountType = 'Pro';
   }
 
   onSubmit() {
