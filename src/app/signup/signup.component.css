@@ -1,0 +1,16 @@
+.signup-container {
+  width:350px;
+  margin:100px auto 0px;
+}
+
+.signup-buttons {
+  width:140px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.home-link {
+  display:block;
+  width:85px;
+  margin:0 auto;
+}

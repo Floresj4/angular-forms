@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -15,5 +16,9 @@ export class LoginComponent implements OnInit {
 
   onSignUp() {
     this.router.navigate(['/signup']);
+  }
+
+  onSubmit(ngForm: NgForm) {
+    console.log('form submitted');
   }
 }
