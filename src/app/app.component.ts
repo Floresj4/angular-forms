@@ -20,7 +20,5 @@ export class AppComponent implements OnInit{
     console.log('form submitted');
   }
 
-  onSignUp() {
 
-  }
 }
