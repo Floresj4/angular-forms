@@ -3,3 +3,9 @@
 input.ng-invalid.ng-touched{
   border:1px solid #f00;
 }
+
+.invalid-field-message {
+  font-size:10px;
+  text-indent:10px;
+  color:#999;
+}

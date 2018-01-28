@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 
 @Component({
@@ -10,6 +10,8 @@ export class SignupComponent implements OnInit {
 
   accountTypes: string[] = ['Basic', 'Advanced', 'Pro'];
   selectedAccountType: string;
+
+  @ViewChild('firstname') fieldname;
 
   constructor() { }
 
