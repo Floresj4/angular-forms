@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {NgForm, NgModel} from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -12,6 +12,9 @@ export class SignupComponent implements OnInit {
   selectedAccountType: string;
 
   @ViewChild('firstname') fieldname;
+  @ViewChild('password') password: NgModel;
+  @ViewChild('confirmPassword') confirmPassword: NgModel;
+  @ViewChild('signupForm') signupForm: NgForm;
 
   constructor() { }
 
@@ -25,5 +28,23 @@ export class SignupComponent implements OnInit {
 
   onReset() {
 
+  }
+
+  isSubmitEnabled() {
+    console.log(this.signupForm.valid);
+    const enabled: boolean = this.arePasswordsValid()
+              && this.arePasswordsTouched()
+              && this.signupForm.valid;
+
+    return enabled;
+  }
+  arePasswordsTouched() {
+    return (this.password.touched && this.confirmPassword.touched);
+  }
+
+  arePasswordsValid() {
+    const pw = this.password.value;
+    const cpw = this.confirmPassword.value;
+    return (pw === cpw && this.arePasswordsTouched());
   }
 }
