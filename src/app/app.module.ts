@@ -6,15 +6,18 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {AppRoutingModule} from './app-routing.module';
-import { SignupComponent } from './signup/signup.component';
-import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './account/signup/signup.component';
+import { LoginComponent } from './account/login/login.component';
+import { ConfirmComponent } from './account/confirm/confirm.component';
+import {AccountService} from './account/account.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,7 @@ import { LoginComponent } from './login/login.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [ AccountService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

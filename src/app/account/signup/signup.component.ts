@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm, NgModel} from '@angular/forms';
 import {Router} from '@angular/router';
+import {AccountService} from '../account.service';
+import {Account} from '../account.model';
 
 @Component({
   selector: 'app-signup',
@@ -17,16 +19,26 @@ export class SignupComponent implements OnInit {
   @ViewChild('confirmPassword') confirmPassword: NgModel;
   @ViewChild('signupForm') signupForm: NgForm;
 
-  constructor(private router: Router) { }
+  constructor(private account: AccountService, private router: Router) { }
 
   ngOnInit() {
     this.selectedAccountType = 'Pro';
   }
 
   onSubmit(signupForm: NgForm) {
-    console.log(signupForm);
 
-    this.router.navigate()
+    if(signupForm.valid) {
+      this.account.confirm(new Account(
+        signupForm.value.firstname,
+        signupForm.value.lastname,
+        signupForm.value.accountType,
+        signupForm.value.email,
+        signupForm.value.password,
+        signupForm.value.confirmPassword,
+      ));
+
+      this.router.navigate(['confirm']);
+    }
   }
 
   onReset() {
@@ -34,7 +46,6 @@ export class SignupComponent implements OnInit {
   }
 
   isSubmitEnabled() {
-    console.log(this.signupForm.valid);
     const enabled: boolean = this.arePasswordsValid()
               && this.arePasswordsTouched()
               && this.signupForm.valid;
