@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm, NgModel} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,7 @@ export class SignupComponent implements OnInit {
   @ViewChild('confirmPassword') confirmPassword: NgModel;
   @ViewChild('signupForm') signupForm: NgForm;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.selectedAccountType = 'Pro';
@@ -24,6 +25,8 @@ export class SignupComponent implements OnInit {
 
   onSubmit(signupForm: NgForm) {
     console.log(signupForm);
+
+    this.router.navigate()
   }
 
   onReset() {
