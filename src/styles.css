@@ -1,5 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
+.signup-container,
+.confirm-container {
+  width:350px;
+  margin:100px auto 0px;
+}
+
 input.ng-invalid.ng-touched{
   border:1px solid #f00;
 }

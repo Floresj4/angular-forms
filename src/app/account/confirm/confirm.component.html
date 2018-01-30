@@ -1,3 +1,17 @@
-<p>
-  confirm works!
-</p>
+<div class="row" *ngIf="account != null">
+  <div class="confirm-container">
+
+    <div class="page-header">
+      <h3>Confirm Account</h3>
+    </div>
+
+    <ul class="list-group">
+      <li class="list-group-item">First name: {{ account.firstname }}</li>
+      <li class="list-group-item">Last name: {{ account.lastname }}</li>
+      <li class="list-group-item">Account type: {{ account.accountType }}</li>
+      <li class="list-group-item">Email: {{ account.email }}</li>
+      <li class="list-group-item">Password: {{ account.hiddenPassword() }}</li>
+    </ul>
+
+  </div>
+</div>

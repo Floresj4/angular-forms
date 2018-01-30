@@ -9,4 +9,15 @@ export class Account {
               public password: string,
               public confirm: string) {
   }
+
+  hiddenPassword() {
+    let hidden = '';
+    const length = this.password.length;
+
+    for (let i = 0; i < length; i++) {
+      hidden += '*';
+    }
+
+    return hidden;
+  }
 }
