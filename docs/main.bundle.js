@@ -93,7 +93,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".confirm-container small {\r\n  margin-left: 10px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -106,7 +106,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/account/confirm/confirm.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" *ngIf=\"account != null\">\n  <div class=\"confirm-container\">\n\n    <div class=\"page-header\">\n      <h3>Confirm Account</h3>\n    </div>\n\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\">First name: {{ account.firstname }}</li>\n      <li class=\"list-group-item\">Last name: {{ account.lastname }}</li>\n      <li class=\"list-group-item\">Account type: {{ account.accountType }}</li>\n      <li class=\"list-group-item\">Email: {{ account.email }}</li>\n      <li class=\"list-group-item\">Password: {{ account.hiddenPassword() }}</li>\n    </ul>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\" *ngIf=\"account != null\">\n  <div class=\"confirm-container\">\n\n    <div class=\"page-header\">\n      <h3>Confirm Account</h3>\n    </div>\n\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\"><h4><span class=\"label label-primary\">First name</span><small>{{ account.firstname }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"label label-primary\">Last name</span><small>{{ account.lastname }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"label label-primary\">Account type</span><small>{{ account.accountType }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"label label-primary\">Email</span><small>{{ account.email }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"label label-primary\">Password</span><small>{{ account.hiddenPassword() }}</small></h4></li>\n    </ul>\n\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -168,7 +168,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".login-container {\r\n  width: 250px;\r\n  margin:150px auto 0;\r\n}\r\n\r\n.form-action-buttons {\r\n  width:145px;\r\n  margin:0 auto;\r\n}\r\n", ""]);
+exports.push([module.i, ".login-container {\r\n  width: 250px;\r\n  margin:150px auto 0;\r\n}\r\n\r\n.form-action-buttons {\r\n  width:145px;\r\n  margin:0 auto;\r\n}\r\n\r\n.sign-in-danger {\r\n  font-size:12px;\r\n  text-align: center;\r\n}\r\n", ""]);
 
 // exports
 
@@ -181,7 +181,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/account/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"login-container\">\n    <form (ngSubmit)=\"onSubmit(loginForm)\" #loginForm=\"ngForm\">\n\n      <div class=\"form-group\">\n        <label for=\"username\">Login</label>\n        <input type=\"text\" name=\"username\" class=\"form-control\"  id=\"username\" placeholder=\"Username or email\">\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <input type=\"password\" name=\"password\" class=\"form-control\" id=\"password\"\n               placeholder=\"******************\">\n      </div>\n\n      <div class=\"form-group\">\n\n        <div class=\"form-action-buttons\">\n          <button type=\"submit\" class=\"btn btn-default\">Log in</button>\n          <button type=\"button\"\n                  class=\"btn btn-primary\"\n                  (click)=\"onSignUp()\">Sign up</button>\n        </div>\n\n      </div>\n\n    </form>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"login-container\">\n\n    <form (ngSubmit)=\"onSubmit(loginForm)\" #loginForm=\"ngForm\">\n\n      <div class=\"form-group\">\n        <label for=\"username\">Login</label>\n        <input type=\"text\" name=\"username\" class=\"form-control\"  id=\"username\" placeholder=\"Username or email\">\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <input type=\"password\" name=\"password\" class=\"form-control\" id=\"password\"\n               placeholder=\"******************\">\n      </div>\n\n      <div class=\"form-group\">\n        <div class=\"form-action-buttons\">\n          <button type=\"submit\" class=\"btn btn-default\">Log in</button>\n          <button type=\"button\"\n                  class=\"btn btn-primary\"\n                  (click)=\"onSignUp()\">Sign up</button>\n        </div>\n      </div>\n\n      <div class=\"form-group\">\n        <div class=\"alert alert-danger sign-in-danger\" role=\"alert\" *ngIf=\"isSubmitted\">\n          <p>Log in is not functional for this exercise.</p>\n        </div>\n      </div>\n\n    </form>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -206,6 +206,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var LoginComponent = (function () {
     function LoginComponent(router) {
         this.router = router;
+        this.isSubmitted = false;
     }
     LoginComponent.prototype.ngOnInit = function () {
     };
@@ -213,7 +214,11 @@ var LoginComponent = (function () {
         this.router.navigate(['/signup']);
     };
     LoginComponent.prototype.onSubmit = function (ngForm) {
-        console.log('form submitted');
+        var _this = this;
+        this.isSubmitted = true;
+        setTimeout(function () {
+            _this.isSubmitted = false;
+        }, 3000);
     };
     LoginComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -251,7 +256,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/account/signup/signup.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"signup-container\">\n\n    <form (ngSubmit)=\"onSubmit(signupForm)\" #signupForm=\"ngForm\">\n      <!-- ngModel tells angular that a field is an active control of the form -->\n      <div class=\"form-group\">\n        <label for=\"firstname\">First name</label>\n        <input type=\"text\"\n               id=\"firstname\"\n               name=\"firstname\"\n               class=\"form-control\"\n               required\n               ngModel\n               #firstname=\"ngModel\">\n        <p class=\"invalid-field-message\" *ngIf=\"!firstname.valid && firstname.touched\">\n          A first name <em>must</em> be supplied\n        </p>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"lastname\">Last name</label>\n        <input type=\"text\"\n               id=\"lastname\"\n               name=\"lastname\"\n               class=\"form-control\"\n               required\n               ngModel\n               #lastname=\"ngModel\">\n        <p class=\"invalid-field-message\" *ngIf=\"!lastname.valid && lastname.touched\">\n          A last name <em>must</em> be supplied\n        </p>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"accountType\">Account type</label>\n        <select id=\"accountType\"\n                name=\"accountType\"\n                [ngModel]=\"selectedAccountType\"\n                class=\"form-control\">\n          <option *ngFor=\"let type of accountTypes\"\n            [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"email\">Email</label>\n        <input type=\"text\"\n               id=\"email\"\n               name=\"email\"\n               class=\"form-control\"\n               ngModel\n               required\n               email\n               #email=\"ngModel\">\n        <!-- email must be bound to ngModel in order to gain access in the control statement below -->\n        <p class='invalid-field-message' *ngIf=\"!email.valid && email.touched\">Please enter a valid email address.</p>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <input type=\"password\"\n               id=\"password\"\n               name=\"password\"\n               class=\"form-control\"\n               required\n               ngModel\n               #password=\"ngModel\">\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"confirmPassword\">Confirm Password</label>\n        <input type=\"confirmPassword\"\n               id=\"confirmPassword\"\n               name=\"confirmPassword\"\n               class=\"form-control\"\n               required\n               ngModel\n               #confirmPassword=\"ngModel\">\n        <p class=\"invalid-field-message\" *ngIf=\"!arePasswordsValid() && arePasswordsTouched()\">\n          Password fields do not match.\n        </p>\n      </div>\n\n      <div class=\"form-group signup-buttons\">\n        <button type=\"submit\"\n                class='btn btn-primary'\n                [disabled]=\"!isSubmitEnabled()\">Submit</button>\n\n        <button type=\"button\"\n                class=\"btn btn-warning\"\n                (click)=\"onReset()\">Reset</button>\n\n      </div>\n\n      <div class=\"form-group\">\n        <a [routerLink]=\"['/']\" class=\"home-link\">Return home</a>\n      </div>\n    </form>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"signup-container\">\n\n    <div class=\"page-header\">\n      <h3>Sign up</h3>\n    </div>\n\n    <form (ngSubmit)=\"onSubmit(signupForm)\" #signupForm=\"ngForm\">\n      <!-- ngModel tells angular that a field is an active control of the form -->\n      <div class=\"form-group\">\n        <label for=\"firstname\">First name</label>\n        <input type=\"text\"\n               id=\"firstname\"\n               name=\"firstname\"\n               class=\"form-control\"\n               required\n               ngModel\n               #firstname=\"ngModel\">\n        <p class=\"invalid-field-message\" *ngIf=\"!firstname.valid && firstname.touched\">\n          A first name <em>must</em> be supplied\n        </p>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"lastname\">Last name</label>\n        <input type=\"text\"\n               id=\"lastname\"\n               name=\"lastname\"\n               class=\"form-control\"\n               required\n               ngModel\n               #lastname=\"ngModel\">\n        <p class=\"invalid-field-message\" *ngIf=\"!lastname.valid && lastname.touched\">\n          A last name <em>must</em> be supplied\n        </p>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"accountType\">Account type</label>\n        <select id=\"accountType\"\n                name=\"accountType\"\n                [ngModel]=\"selectedAccountType\"\n                class=\"form-control\">\n          <option *ngFor=\"let type of accountTypes\"\n            [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"email\">Email</label>\n        <input type=\"text\"\n               id=\"email\"\n               name=\"email\"\n               class=\"form-control\"\n               ngModel\n               required\n               email\n               #email=\"ngModel\">\n        <!-- email must be bound to ngModel in order to gain access in the control statement below -->\n        <p class='invalid-field-message' *ngIf=\"!email.valid && email.touched\">Please enter a valid email address.</p>\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <input type=\"password\"\n               id=\"password\"\n               name=\"password\"\n               class=\"form-control\"\n               required\n               ngModel\n               #password=\"ngModel\">\n      </div>\n\n      <div class=\"form-group\">\n        <label for=\"confirmPassword\">Confirm Password</label>\n        <input type=\"password\"\n               id=\"confirmPassword\"\n               name=\"confirmPassword\"\n               class=\"form-control\"\n               required\n               ngModel\n               #confirmPassword=\"ngModel\">\n        <p class=\"invalid-field-message\" *ngIf=\"!arePasswordsValid() && arePasswordsTouched()\">\n          Password fields do not match.\n        </p>\n      </div>\n\n      <div class=\"form-group signup-buttons\">\n        <button type=\"submit\"\n                class='btn btn-primary'\n                [disabled]=\"!isSubmitEnabled()\">Submit</button>\n\n        <button type=\"button\"\n                class=\"btn btn-warning\"\n                (click)=\"onReset()\">Reset</button>\n\n      </div>\n\n      <div class=\"form-group\">\n        <a [routerLink]=\"['/']\" class=\"home-link\">Return home</a>\n      </div>\n    </form>\n\n  </div>\n</div>\n"
 
 /***/ }),
 
