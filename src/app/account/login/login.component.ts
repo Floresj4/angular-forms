@@ -9,6 +9,8 @@ import {NgForm} from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
+  isSubmitted: boolean = false;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -19,6 +21,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(ngForm: NgForm) {
-    console.log('form submitted');
+    this.isSubmitted = true;
+    setTimeout(() => {
+      this.isSubmitted = false;
+    }, 10000);
   }
 }
