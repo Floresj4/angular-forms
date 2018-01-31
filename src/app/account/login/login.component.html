@@ -24,9 +24,9 @@
       </div>
 
       <div class="form-group">
-        <p class="sign-in-warning" *ngIf="isSubmitted">
-          Log in is not functional for this exercise.
-        </p>
+        <div class="alert alert-danger sign-in-danger" role="alert" *ngIf="isSubmitted">
+          <p>Log in is not functional for this exercise.</p>
+        </div>
       </div>
 
     </form>

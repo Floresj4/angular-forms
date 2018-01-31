@@ -24,6 +24,6 @@ export class LoginComponent implements OnInit {
     this.isSubmitted = true;
     setTimeout(() => {
       this.isSubmitted = false;
-    }, 10000);
+    }, 3000);
   }
 }
