@@ -2,7 +2,7 @@
   <div class="signup-container">
 
     <form (ngSubmit)="onSubmit(signupForm)" #signupForm="ngForm">
-
+      <!-- ngModel tells angular that a field is an active control of the form -->
       <div class="form-group">
         <label for="firstname">First name</label>
         <input type="text"
