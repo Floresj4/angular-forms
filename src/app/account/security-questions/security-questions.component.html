@@ -12,15 +12,29 @@
         <label>Are you a robot?</label>
         <input type="text"
                id="robot"
-               name="robot"
                formControlName="robot"
                class="form-control">
+
+        <p class="invalid-field-message"
+          *ngIf="!securityForm.get('robot').valid && securityForm.get('robot').touched">
+
+          <span *ngIf="securityForm.get('robot').errors['required']">
+            A response to this field is required.
+          </span>
+
+          <span *ngIf="securityForm.get('robot').errors['robotResponse']">
+            Please enter a response of <strong>yes</strong>, <strong>no</strong>, or <strong>maybe</strong>
+          </span>
+        </p>
+
       </div>
 
       <div class="form-group">
         <button type="submit"
-                class="btn btn-primary"
-        >Submit</button>
+                [disabled]="!securityForm.valid"
+                class="btn btn-primary">
+          Submit
+        </button>
       </div>
 
     </form>

@@ -26,12 +26,17 @@ export class SecurityQuestionsComponent implements OnInit {
 
   }
 
-  isValidRobotResponse(control: FormControl): {'robotResponse': boolean} {
+  isValidRobotResponse(control: FormControl): {[key: string]: boolean} {
     const value = control.value !== null
       ? control.value.toLowerCase() : null;
 
-    if (this.validRobotResponse.indexOf(value) === -1) {
-      return { 'robotResponse': true };
+    // ignore blank or null, 'required' validator will catch it
+    if (value === '' || value === null) {
+      return null;
+    }
+
+    if (this.validRobotResponse.indexOf(control.value) === -1) {
+      return {'robotResponse': true};
     }
 
     return null;
