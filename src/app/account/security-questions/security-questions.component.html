@@ -6,7 +6,7 @@
     </div>
 
     <!-- use property binding to set the value as an object and not a string -->
-    <form [formGroup]="securityForm">
+    <form [formGroup]="securityForm" (ngSubmit)="onSubmit()">
 
       <div class="form-group">
         <label>Are you a robot?</label>
@@ -16,6 +16,13 @@
                formControlName="robot"
                class="form-control">
       </div>
+
+      <div class="form-group">
+        <button type="submit"
+                class="btn btn-primary"
+        >Submit</button>
+      </div>
+
     </form>
 
   </div>
