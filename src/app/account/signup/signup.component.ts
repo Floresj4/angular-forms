@@ -23,11 +23,16 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.selectedAccountType = 'Pro';
+
+    this.signupForm.form.patchValue({
+      'firstname': 'hey'
+    });
   }
 
   onSubmit(signupForm: NgForm) {
 
     if(signupForm.valid) {
+
       this.account.confirm(new Account(
         signupForm.value.firstname,
         signupForm.value.lastname,
@@ -37,12 +42,19 @@ export class SignupComponent implements OnInit {
         signupForm.value.confirmPassword,
       ));
 
-      this.router.navigate(['confirm']);
+      this.router.navigate(['security']);
     }
   }
 
   onReset() {
-
+    this.signupForm.form.setValue({
+      'firstname': 'test',
+      'lastname': 'user',
+      'accountType': 'Pro',
+      'email': 'testuser@mail.com',
+      'password': 'banana',
+      'confirmPassword': 'banana'
+    });
   }
 
   isSubmitEnabled() {
