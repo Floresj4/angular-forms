@@ -8,6 +8,14 @@
     <!-- use property binding to set the value as an object and not a string -->
     <form [formGroup]="securityForm">
 
+      <div class="form-group">
+        <label>Are you a robot?</label>
+        <input type="text"
+               id="robot"
+               name="robot"
+               formControlName="robot"
+               class="form-control">
+      </div>
     </form>
 
   </div>
