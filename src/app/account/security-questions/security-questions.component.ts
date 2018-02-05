@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-security-questions',
@@ -10,11 +10,14 @@ export class SecurityQuestionsComponent implements OnInit {
 
   securityForm: FormGroup;
 
+  numberOfQuestions = 0;
+
   validRobotResponse: string[] = ['yes', 'no', 'maybe'];
   securityQuestions: string[] = [
     'What is your favorite color?',
     'What is your first pet\'s name?',
-    'What is your favorite number?'
+    'What is your favorite number?',
+    'How much wood could a woodchuck chuck if a woodchuck could chuck would?'
   ];
 
   constructor() { }
@@ -26,7 +29,10 @@ export class SecurityQuestionsComponent implements OnInit {
       'robot': new FormControl(null, [
         Validators.required,
         this.isValidRobotResponse.bind(this)
-      ])
+      ]),
+
+      // initialize empty to dynamically populate
+      'answers': new FormArray([])
     });
 
   }
@@ -45,6 +51,13 @@ export class SecurityQuestionsComponent implements OnInit {
     }
 
     return null;
+  }
+
+  onQuestionAdd() {
+    this.numberOfQuestions++;
+
+    (<FormArray>this.securityForm.get('answers'))
+      .push(new FormControl(null, Validators.required));
   }
 
   onSubmit() {
