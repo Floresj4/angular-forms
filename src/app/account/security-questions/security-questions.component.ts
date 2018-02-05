@@ -11,6 +11,11 @@ export class SecurityQuestionsComponent implements OnInit {
   securityForm: FormGroup;
 
   validRobotResponse: string[] = ['yes', 'no', 'maybe'];
+  securityQuestions: string[] = [
+    'What is your favorite color?',
+    'What is your first pet\'s name?',
+    'What is your favorite number?'
+  ];
 
   constructor() { }
 
