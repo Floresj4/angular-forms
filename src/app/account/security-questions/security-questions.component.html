@@ -2,7 +2,7 @@
   <div class="signup-container">
 
     <div class="page-header">
-      <h3>Security</h3>
+      <h3><span class="glyphicon glyphicon-lock"></span> Security</h3>
     </div>
 
     <!-- use property binding to set the value as an object and not a string -->
@@ -33,28 +33,33 @@
         <h4>Questions <small>choose 3</small></h4>
 
         <div class="form-group"
-             formArrayName="answers"
-             *ngFor="let question of securityForm.get('answers').controls; let i = index">
+             formArrayName="questions"
+             *ngFor="let i = index; let question of securityForm.get('questions').controls">
 
-          <span class="">Question {{ i + 1}}</span>
+          <span>Question {{ i + 1}}</span>
 
           <select
-            id="label"
-            class="form-control"
-            [name]="'question' + 1"
-            style="margin-bottom:10px;">
+            [id]="'question_' + i"
+            [name]="'question_' + i"
+            #questionSelect
+            class="form-control question-select">
             <option *ngFor="let q of securityQuestions">{{q}}</option>
           </select>
 
           <!-- property bind to set the value, not the string -->
           <input type="text"
+            [id]="'answer_' + i"
+            [name]="'answer_' + i"
+            #answerInput
             [formControlName]="i"
-            class="form-control">
+            class="form-control"
+            required
+            (blur)="onAnswerBlur(i, questionSelect.value, answerInput.value)">
 
         </div>
 
         <button type="button"
-                [disabled]="numberOfQuestions == 3"
+                [disabled]="isQuestionAddDisabled()"
                 (click)="onQuestionAdd()"
                 class="btn btn-default form-control">
           Add
@@ -64,7 +69,7 @@
 
       <div class="form-group">
         <button type="submit"
-                [disabled]="!securityForm.valid"
+                [disabled]="isFormDisabled()"
                 class="btn btn-primary">
           Submit
         </button>
