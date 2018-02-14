@@ -30,7 +30,7 @@
       </div>
 
       <div class="form-group">
-        <h4>Questions <small>choose 3</small></h4>
+        <h4>Questions <small>choose {{ minimumQuestions }}</small></h4>
 
         <div class="form-group"
              formArrayName="questions"
@@ -65,11 +65,15 @@
           Add
         </button>
 
+        <p class="invalid-field-message"
+           *ngIf="!areQuestionsValid()">
+          You must select 3 different questions.
+        </p>
       </div>
 
       <div class="form-group">
         <button type="submit"
-                [disabled]="isFormDisabled()"
+                [disabled]="isSubmitDisabled()"
                 class="btn btn-primary">
           Submit
         </button>

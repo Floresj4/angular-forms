@@ -10,8 +10,8 @@ export class SecurityQuestionsComponent implements OnInit {
 
   securityForm: FormGroup;
 
-  maximumNumberOfQuestions: number = 5;
-  numberOfQuestions: number;
+  numberofQuestions: number;
+  minimumQuestions: number = 3;
 
   validRobotResponse: string[] = ['yes', 'no', 'maybe'];
   securityQuestions: string[] = [
@@ -28,7 +28,7 @@ export class SecurityQuestionsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.numberOfQuestions = 0;
+    this.numberofQuestions = 0;
 
     // initialize the form
     this.securityForm = new FormGroup({
@@ -42,9 +42,9 @@ export class SecurityQuestionsComponent implements OnInit {
     });
   }
 
-  isFormDisabled() {
-    const validity = !this.securityForm.valid
-      && this.numberOfQuestions !== this.maximumNumberOfQuestions;
+  isSubmitDisabled() {
+    const validity = this.numberofQuestions < this.minimumQuestions
+      && !this.securityForm.valid;
     return validity;
   }
 
@@ -65,11 +65,12 @@ export class SecurityQuestionsComponent implements OnInit {
   }
 
   isQuestionAddDisabled() {
-    return this.numberOfQuestions >= this.maximumNumberOfQuestions;
+    console.log(this.numberofQuestions + ' ' + this.minimumQuestions);
+    return this.numberofQuestions >= this.minimumQuestions;
   }
 
   onQuestionAdd() {
-    this.numberOfQuestions++;
+    this.numberofQuestions++;
     const formArray: FormArray = (<FormArray>this.securityForm.get('questions'));
     formArray.push(new FormControl(null, Validators.required));
   }
@@ -102,6 +103,6 @@ export class SecurityQuestionsComponent implements OnInit {
   }
 
   onSubmit() {
-
+    console.log('submitted');
   }
 }
