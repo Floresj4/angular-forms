@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AccountService} from '../account.service';
 
 @Component({
   selector: 'app-security-questions',
@@ -28,7 +29,7 @@ export class SecurityQuestionsComponent implements OnInit {
   isFormSubmitted: boolean;
   areQuestionsValid: boolean;
 
-  constructor() { }
+  constructor(private accountService: AccountService) { }
 
   ngOnInit() {
 
