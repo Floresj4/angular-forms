@@ -65,18 +65,28 @@
           Add
         </button>
 
-        <p class="invalid-field-message"
-           *ngIf="!areQuestionsValid()">
-          You must select 3 different questions.
-        </p>
       </div>
 
       <div class="form-group">
-        <button type="submit"
-                [disabled]="isSubmitDisabled()"
-                class="btn btn-primary">
-          Submit
-        </button>
+        <div class="row">
+
+          <div class="col-xs-2">
+            <button id='submit'
+                    type="submit"
+                    [disabled]="isSubmitDisabled()"
+                    class="btn btn-primary">
+              Submit
+            </button>
+          </div>
+
+          <div class="col-xs-10">
+            <p class="invalid-field-message submit-row"
+              *ngIf="isFormSubmitted && !areQuestionsValid">
+              You must select 3 different questions.
+            </p>
+          </div>
+
+        </div>
       </div>
 
     </form>

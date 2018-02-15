@@ -12,6 +12,7 @@ export class SecurityQuestionsComponent implements OnInit {
 
   numberofQuestions: number;
   minimumQuestions: number = 3;
+  timeoutKey: any;
 
   validRobotResponse: string[] = ['yes', 'no', 'maybe'];
   securityQuestions: string[] = [
@@ -23,6 +24,9 @@ export class SecurityQuestionsComponent implements OnInit {
   ];
 
   selectedQuestions: any[] = [];
+
+  isFormSubmitted: boolean;
+  areQuestionsValid: boolean;
 
   constructor() { }
 
@@ -43,7 +47,7 @@ export class SecurityQuestionsComponent implements OnInit {
   }
 
   isSubmitDisabled() {
-    const validity = this.numberofQuestions < this.minimumQuestions
+    const validity = true
       && !this.securityForm.valid;
     return validity;
   }
@@ -65,7 +69,6 @@ export class SecurityQuestionsComponent implements OnInit {
   }
 
   isQuestionAddDisabled() {
-    console.log(this.numberofQuestions + ' ' + this.minimumQuestions);
     return this.numberofQuestions >= this.minimumQuestions;
   }
 
@@ -79,11 +82,16 @@ export class SecurityQuestionsComponent implements OnInit {
     this.selectedQuestions[index] = { question, answer };
   }
 
-  areQuestionsValid() {
+  evaluateQuestions() {
+
+    const totalSelectedQuestions = this.selectedQuestions.length;
+    if(totalSelectedQuestions === 0 || totalSelectedQuestions < this.minimumQuestions) {
+      return false;
+    }
 
     // don't allow duplicates
-    for(let i = 0; i < this.selectedQuestions.length; i++) {
-      for(let j = 0; j < this.selectedQuestions.length; j++) {
+    for(let i = 0; i < totalSelectedQuestions; i++) {
+      for(let j = 0; j < totalSelectedQuestions; j++) {
 
         // avoid comparing against self
         if (i === j) {
@@ -103,6 +111,19 @@ export class SecurityQuestionsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('submitted');
+    this.isFormSubmitted = true;
+    this.areQuestionsValid = this.evaluateQuestions();
+    if(!this.areQuestionsValid) {
+
+      //clear the interval to prevent duplication
+      if(typeof this.timeoutKey !== 'undefined') {
+        clearTimeout(this.timeoutKey);
+      }
+
+      // set a timeout to clear the isFormSubmitted flag
+      this.timeoutKey = setTimeout(() => {
+        this.isFormSubmitted = false;
+      }, 3000);
+    }
   }
 }
