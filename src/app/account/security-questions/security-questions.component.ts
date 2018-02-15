@@ -47,9 +47,7 @@ export class SecurityQuestionsComponent implements OnInit {
   }
 
   isSubmitDisabled() {
-    const validity = true
-      && !this.securityForm.valid;
-    return validity;
+    return !this.securityForm.valid;
   }
 
   isValidRobotResponse(control: FormControl): {[key: string]: boolean} {
