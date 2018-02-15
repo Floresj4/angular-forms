@@ -1,5 +1,7 @@
 export class Account {
 
+  securityQuestions: {};
+
   // would never pass passwords around like this, but just for
   // the sample project
   constructor(public firstname: string,
@@ -19,5 +21,9 @@ export class Account {
     }
 
     return hidden;
+  }
+
+  setSecurityQuestions(questions: {}) {
+    this.securityQuestions = questions;
   }
 }
