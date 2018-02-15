@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AccountService} from '../account.service';
+import {Account} from '../account.model';
 
 @Component({
   selector: 'app-security-questions',
@@ -112,6 +113,7 @@ export class SecurityQuestionsComponent implements OnInit {
   onSubmit() {
     this.isFormSubmitted = true;
     this.areQuestionsValid = this.evaluateQuestions();
+
     if(!this.areQuestionsValid) {
 
       //clear the interval to prevent duplication
@@ -123,6 +125,16 @@ export class SecurityQuestionsComponent implements OnInit {
       this.timeoutKey = setTimeout(() => {
         this.isFormSubmitted = false;
       }, 3000);
+
+      return;
     }
+
+    //build a separate object to work around the hacky q&a impl.
+    //update the account info captured earlier
+    let account: Account = this.accountService.getAccount();
+    account.setSecurityQuestions({
+      'robot': this.securityForm.get('robot').value,
+      'securityQuestions' : JSON.stringify(this.selectedQuestions)
+    });
   }
 }
