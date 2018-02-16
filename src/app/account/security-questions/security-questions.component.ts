@@ -36,6 +36,10 @@ export class SecurityQuestionsComponent implements OnInit {
 
   ngOnInit() {
 
+    if(this.accountService.getAccount() == null) {
+      this.router.navigate(['']);
+    }
+
     this.numberofQuestions = 0;
 
     // initialize the form
