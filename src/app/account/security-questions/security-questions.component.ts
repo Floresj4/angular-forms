@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AccountService} from '../account.service';
 import {Account} from '../account.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-security-questions',
@@ -30,7 +31,8 @@ export class SecurityQuestionsComponent implements OnInit {
   isFormSubmitted: boolean;
   areQuestionsValid: boolean;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -136,5 +138,7 @@ export class SecurityQuestionsComponent implements OnInit {
       'robot': this.securityForm.get('robot').value,
       'securityQuestions' : JSON.stringify(this.selectedQuestions)
     });
+
+    this.router.navigate(['confirm']);
   }
 }
