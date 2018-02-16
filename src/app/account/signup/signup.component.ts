@@ -23,10 +23,6 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.selectedAccountType = 'Pro';
-
-    this.signupForm.form.patchValue({
-      'firstname': 'hey'
-    });
   }
 
   onSubmit(signupForm: NgForm) {
