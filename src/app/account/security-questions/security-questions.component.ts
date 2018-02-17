@@ -140,7 +140,7 @@ export class SecurityQuestionsComponent implements OnInit {
     let account: Account = this.accountService.getAccount();
     account.setSecurityQuestions({
       'robot': this.securityForm.get('robot').value,
-      'securityQuestions' : JSON.stringify(this.selectedQuestions)
+      'security' : JSON.stringify(this.selectedQuestions)
     });
 
     this.router.navigate(['confirm']);

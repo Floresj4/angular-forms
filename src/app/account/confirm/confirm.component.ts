@@ -24,5 +24,7 @@ export class ConfirmComponent implements OnInit {
     if(this.account == null) {
       this.router.navigate(['signup']);
     }
+
+    console.log(JSON.stringify(this.account));
   }
 }
