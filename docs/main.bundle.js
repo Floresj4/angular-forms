@@ -41,6 +41,9 @@ var Account = (function () {
         }
         return hidden;
     };
+    Account.prototype.setSecurity = function (security) {
+        this.security = security;
+    };
     return Account;
 }());
 
@@ -93,7 +96,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".confirm-container small {\r\n  margin-left: 10px;\r\n}\r\n", ""]);
+exports.push([module.i, ".confirm-container small {\r\n  margin-left: 10px;\r\n}\r\n\r\n.confirm-label {\r\n  width: 120px;\r\n  display: inline-block;\r\n}\r\n\r\n.confirm-question-answer {\r\n  padding:10px 10px 0 10px;\r\n}\r\n\r\n/** hacky, but only a learning project... **/\r\n.confirm-question-answer-bottom {\r\n  padding-bottom:10px\r\n}\r\n", ""]);
 
 // exports
 
@@ -106,7 +109,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/account/confirm/confirm.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" *ngIf=\"account != null\">\n  <div class=\"confirm-container\">\n\n    <div class=\"page-header\">\n      <h3>Confirm Account</h3>\n    </div>\n\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\"><h4><span class=\"label label-primary\">First name</span><small>{{ account.firstname }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"label label-primary\">Last name</span><small>{{ account.lastname }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"label label-primary\">Account type</span><small>{{ account.accountType }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"label label-primary\">Email</span><small>{{ account.email }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"label label-primary\">Password</span><small>{{ account.hiddenPassword() }}</small></h4></li>\n    </ul>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\" *ngIf=\"account != null\">\n  <div class=\"confirm-container\">\n\n    <div class=\"page-header\">\n      <h3><span class=\"glyphicon glyphicon-ok\"></span> Confirm Account</h3>\n    </div>\n\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\"><h4><span class=\"confirm-label\">First name</span><small>{{ account.firstname }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"confirm-label\">Last name</span><small>{{ account.lastname }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"confirm-label\">Account type</span><small>{{ account.accountType }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"confirm-label\">Email</span><small>{{ account.email }}</small></h4></li>\n      <li class=\"list-group-item\"><h4><span class=\"confirm-label\">Password</span><small>{{ account.hiddenPassword() }}</small></h4></li>\n    </ul>\n\n    <div class=\"panel panel-default confirm-question-answer-bottom\">\n      <div class=\"panel-heading\"><span class=\"glyphicon glyphicon-lock\"></span> Security</div>\n\n      <div class=\"confirm-question-answer\">\n        <label>Are you a robot?</label>\n        <input type=\"text\"\n               disabled=\"true\"\n               class=\"form-control\"\n               value=\"{{ account.security.robot }}\">\n      </div>\n\n      <div *ngFor=\"let q of account.security.questions\"\n        class=\"confirm-question-answer\">\n        <label>{{ q.question }}</label>\n        <input type=\"text\" disabled=\"true\"\n               class=\"form-control\"\n               [value]=\"q.answer\">\n      </div>\n\n    </div>\n\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -235,6 +238,171 @@ var LoginComponent = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/account/security-questions/security-questions.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".question-select {\r\n  margin-bottom:10px;\r\n}\r\n\r\n.submit-row {\r\n  margin-top:10px;\r\n  margin-left:10px;\r\n}\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/account/security-questions/security-questions.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\r\n  <div class=\"signup-container\">\r\n\r\n    <div class=\"page-header\">\r\n      <h3><span class=\"glyphicon glyphicon-lock\"></span> Security</h3>\r\n    </div>\r\n\r\n    <!-- use property binding to set the value as an object and not a string -->\r\n    <form [formGroup]=\"securityForm\" (ngSubmit)=\"onSubmit()\">\r\n\r\n      <div class=\"form-group\">\r\n        <label>Are you a robot?</label>\r\n        <input type=\"text\"\r\n               id=\"robot\"\r\n               formControlName=\"robot\"\r\n               class=\"form-control\">\r\n\r\n        <p class=\"invalid-field-message\"\r\n          *ngIf=\"!securityForm.get('robot').valid && securityForm.get('robot').touched\">\r\n\r\n          <span *ngIf=\"securityForm.get('robot').errors['required']\">\r\n            A response to this field is required.\r\n          </span>\r\n\r\n          <span *ngIf=\"securityForm.get('robot').errors['robotResponse']\">\r\n            Please enter a response of <strong>yes</strong>, <strong>no</strong>, or <strong>maybe</strong>\r\n          </span>\r\n        </p>\r\n\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <h4>Questions <small>choose {{ minimumQuestions }}</small></h4>\r\n\r\n        <div class=\"form-group\"\r\n             formArrayName=\"securityQuestions\"\r\n             *ngFor=\"let i = index; let question of securityForm.get('securityQuestions').controls\">\r\n\r\n          <span>Question {{ i + 1}}</span>\r\n\r\n          <select\r\n            [id]=\"'question_' + i\"\r\n            [name]=\"'question_' + i\"\r\n            #questionSelect\r\n            class=\"form-control question-select\">\r\n            <option *ngFor=\"let q of securityQuestions\">{{q}}</option>\r\n          </select>\r\n\r\n          <!-- property bind to set the value, not the string -->\r\n          <input type=\"text\"\r\n            [id]=\"'answer_' + i\"\r\n            [name]=\"'answer_' + i\"\r\n            #answerInput\r\n            [formControlName]=\"i\"\r\n            class=\"form-control\"\r\n            required\r\n            (blur)=\"onAnswerBlur(i, questionSelect.value, answerInput.value)\">\r\n\r\n        </div>\r\n\r\n        <button type=\"button\"\r\n                [disabled]=\"isQuestionAddDisabled()\"\r\n                (click)=\"onQuestionAdd()\"\r\n                class=\"btn btn-default form-control\">\r\n          Add\r\n        </button>\r\n\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <div class=\"row\">\r\n\r\n          <div class=\"col-xs-2\">\r\n            <button id='submit'\r\n                    type=\"submit\"\r\n                    [disabled]=\"isSubmitDisabled()\"\r\n                    class=\"btn btn-primary\">\r\n              Submit\r\n            </button>\r\n          </div>\r\n\r\n          <div class=\"col-xs-10\">\r\n            <p class=\"invalid-field-message submit-row\"\r\n              *ngIf=\"isFormSubmitted && !areQuestionsValid\">\r\n              You must select 3 different questions.\r\n            </p>\r\n          </div>\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </form>\r\n\r\n  </div>\r\n</div>\r\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/account/security-questions/security-questions.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SecurityQuestionsComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__account_service__ = __webpack_require__("../../../../../src/app/account/account.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var SecurityQuestionsComponent = (function () {
+    function SecurityQuestionsComponent(accountService, router) {
+        this.accountService = accountService;
+        this.router = router;
+        this.minimumQuestions = 3;
+        this.validRobotResponse = ['yes', 'no', 'maybe'];
+        this.securityQuestions = [
+            'What is your favorite color?',
+            'What is your first pet\'s name?',
+            'What is your favorite number?',
+            'What city were you born in?',
+            'What was your first car?'
+        ];
+        this.selectedQuestions = [];
+    }
+    SecurityQuestionsComponent.prototype.ngOnInit = function () {
+        if (this.accountService.getAccount() == null) {
+            this.router.navigate(['']);
+        }
+        this.numberofQuestions = 0;
+        // initialize the form
+        this.securityForm = new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormGroup */]({
+            'robot': new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormControl */](null, [
+                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["h" /* Validators */].required,
+                this.isValidRobotResponse.bind(this)
+            ]),
+            // initialize empty to dynamically populate
+            'securityQuestions': new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormArray */]([])
+        });
+    };
+    SecurityQuestionsComponent.prototype.isSubmitDisabled = function () {
+        return !this.securityForm.valid;
+    };
+    SecurityQuestionsComponent.prototype.isValidRobotResponse = function (control) {
+        var value = control.value !== null
+            ? control.value.toLowerCase() : null;
+        // ignore blank or null, 'required' validator will catch it
+        if (value === '' || value === null) {
+            return null;
+        }
+        if (this.validRobotResponse.indexOf(control.value) === -1) {
+            return { 'robotResponse': true };
+        }
+        return null;
+    };
+    SecurityQuestionsComponent.prototype.isQuestionAddDisabled = function () {
+        return this.numberofQuestions >= this.minimumQuestions;
+    };
+    SecurityQuestionsComponent.prototype.onQuestionAdd = function () {
+        this.numberofQuestions++;
+        var formArray = this.securityForm.get('securityQuestions');
+        formArray.push(new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormControl */](null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["h" /* Validators */].required));
+    };
+    SecurityQuestionsComponent.prototype.onAnswerBlur = function (index, question, answer) {
+        this.selectedQuestions[index] = { question: question, answer: answer };
+    };
+    SecurityQuestionsComponent.prototype.evaluateQuestions = function () {
+        var totalSelectedQuestions = this.selectedQuestions.length;
+        if (totalSelectedQuestions === 0 || totalSelectedQuestions < this.minimumQuestions) {
+            return false;
+        }
+        // don't allow duplicates
+        for (var i = 0; i < totalSelectedQuestions; i++) {
+            for (var j = 0; j < totalSelectedQuestions; j++) {
+                // avoid comparing against self
+                if (i === j) {
+                    continue;
+                }
+                // ensure that two of the same questions are not selected
+                var current = this.selectedQuestions[i]['question'];
+                var compare = this.selectedQuestions[j]['question'];
+                if (current === compare) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+    SecurityQuestionsComponent.prototype.onSubmit = function () {
+        var _this = this;
+        this.isFormSubmitted = true;
+        this.areQuestionsValid = this.evaluateQuestions();
+        if (!this.areQuestionsValid) {
+            //clear the interval to prevent duplication
+            if (typeof this.timeoutKey !== 'undefined') {
+                clearTimeout(this.timeoutKey);
+            }
+            // set a timeout to clear the isFormSubmitted flag
+            this.timeoutKey = setTimeout(function () {
+                _this.isFormSubmitted = false;
+            }, 3000);
+            return;
+        }
+        //build a separate object to work around the hacky q&a impl.
+        //update the account info captured earlier
+        var account = this.accountService.getAccount();
+        account.setSecurity({
+            'robot': this.securityForm.get('robot').value,
+            'questions': this.selectedQuestions
+        });
+        this.router.navigate(['confirm']);
+    };
+    SecurityQuestionsComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-security-questions',
+            template: __webpack_require__("../../../../../src/app/account/security-questions/security-questions.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/account/security-questions/security-questions.component.css")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__account_service__["a" /* AccountService */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* Router */]])
+    ], SecurityQuestionsComponent);
+    return SecurityQuestionsComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/account/signup/signup.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -296,10 +464,18 @@ var SignupComponent = (function () {
     SignupComponent.prototype.onSubmit = function (signupForm) {
         if (signupForm.valid) {
             this.account.confirm(new __WEBPACK_IMPORTED_MODULE_4__account_model__["a" /* Account */](signupForm.value.firstname, signupForm.value.lastname, signupForm.value.accountType, signupForm.value.email, signupForm.value.password, signupForm.value.confirmPassword));
-            this.router.navigate(['confirm']);
+            this.router.navigate(['security']);
         }
     };
     SignupComponent.prototype.onReset = function () {
+        this.signupForm.form.setValue({
+            'firstname': 'test',
+            'lastname': 'user',
+            'accountType': 'Pro',
+            'email': 'testuser@mail.com',
+            'password': 'banana',
+            'confirmPassword': 'banana'
+        });
     };
     SignupComponent.prototype.isSubmitEnabled = function () {
         var enabled = this.arePasswordsValid()
@@ -321,15 +497,15 @@ var SignupComponent = (function () {
     ], SignupComponent.prototype, "fieldname", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('password'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* NgModel */])
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* NgModel */])
     ], SignupComponent.prototype, "password", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('confirmPassword'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* NgModel */])
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* NgModel */])
     ], SignupComponent.prototype, "confirmPassword", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('signupForm'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* NgForm */])
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* NgForm */])
     ], SignupComponent.prototype, "signupForm", void 0);
     SignupComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -356,6 +532,7 @@ var SignupComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__account_signup_signup_component__ = __webpack_require__("../../../../../src/app/account/signup/signup.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__account_login_login_component__ = __webpack_require__("../../../../../src/app/account/login/login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__account_confirm_confirm_component__ = __webpack_require__("../../../../../src/app/account/confirm/confirm.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__account_security_questions_security_questions_component__ = __webpack_require__("../../../../../src/app/account/security-questions/security-questions.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -367,10 +544,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var appRoutes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_3__account_login_login_component__["a" /* LoginComponent */] },
     { path: 'signup', component: __WEBPACK_IMPORTED_MODULE_2__account_signup_signup_component__["a" /* SignupComponent */] },
-    { path: 'confirm', component: __WEBPACK_IMPORTED_MODULE_4__account_confirm_confirm_component__["a" /* ConfirmComponent */] },
+    { path: 'security', component: __WEBPACK_IMPORTED_MODULE_5__account_security_questions_security_questions_component__["a" /* SecurityQuestionsComponent */] },
+    { path: 'confirm', component: __WEBPACK_IMPORTED_MODULE_4__account_confirm_confirm_component__["a" /* ConfirmComponent */] }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
@@ -474,12 +653,14 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__account_login_login_component__ = __webpack_require__("../../../../../src/app/account/login/login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__account_confirm_confirm_component__ = __webpack_require__("../../../../../src/app/account/confirm/confirm.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__account_account_service__ = __webpack_require__("../../../../../src/app/account/account.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__account_security_questions_security_questions_component__ = __webpack_require__("../../../../../src/app/account/security-questions/security-questions.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -499,11 +680,13 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */],
                 __WEBPACK_IMPORTED_MODULE_6__account_signup_signup_component__["a" /* SignupComponent */],
                 __WEBPACK_IMPORTED_MODULE_7__account_login_login_component__["a" /* LoginComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__account_confirm_confirm_component__["a" /* ConfirmComponent */]
+                __WEBPACK_IMPORTED_MODULE_8__account_confirm_confirm_component__["a" /* ConfirmComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__account_security_questions_security_questions_component__["a" /* SecurityQuestionsComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["d" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["g" /* ReactiveFormsModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_5__app_routing_module__["a" /* AppRoutingModule */]
             ],
