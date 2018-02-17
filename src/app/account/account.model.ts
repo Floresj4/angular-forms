@@ -1,6 +1,6 @@
 export class Account {
 
-  securityQuestions: {};
+  security: {};
 
   // would never pass passwords around like this, but just for
   // the sample project
@@ -23,7 +23,7 @@ export class Account {
     return hidden;
   }
 
-  setSecurityQuestions(questions: {}) {
-    this.securityQuestions = questions;
+  setSecurity(security: {}) {
+    this.security = security;
   }
 }

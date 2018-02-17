@@ -21,15 +21,15 @@
         <input type="text"
                disabled="true"
                class="form-control"
-               value="{{ account.securityQuestions.robot }}">
+               value="{{ account.security.robot }}">
       </div>
 
-      <div *ngFor="let question of account.securityQuestions.securityQuestions"
+      <div *ngFor="let q of account.security.questions"
         class="confirm-question-answer">
-        <label>{{ question.question }}</label>
+        <label>{{ q.question }}</label>
         <input type="text" disabled="true"
                class="form-control"
-               [value]="question.answer">
+               [value]="q.answer">
       </div>
 
     </div>

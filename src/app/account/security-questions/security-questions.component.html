@@ -33,8 +33,8 @@
         <h4>Questions <small>choose {{ minimumQuestions }}</small></h4>
 
         <div class="form-group"
-             formArrayName="questions"
-             *ngFor="let i = index; let question of securityForm.get('questions').controls">
+             formArrayName="securityQuestions"
+             *ngFor="let i = index; let question of securityForm.get('securityQuestions').controls">
 
           <span>Question {{ i + 1}}</span>
 

@@ -50,7 +50,7 @@ export class SecurityQuestionsComponent implements OnInit {
       ]),
 
       // initialize empty to dynamically populate
-      'questions': new FormArray([])
+      'securityQuestions': new FormArray([])
     });
   }
 
@@ -80,7 +80,7 @@ export class SecurityQuestionsComponent implements OnInit {
 
   onQuestionAdd() {
     this.numberofQuestions++;
-    const formArray: FormArray = (<FormArray>this.securityForm.get('questions'));
+    const formArray: FormArray = (<FormArray>this.securityForm.get('securityQuestions'));
     formArray.push(new FormControl(null, Validators.required));
   }
 
@@ -138,9 +138,9 @@ export class SecurityQuestionsComponent implements OnInit {
     //build a separate object to work around the hacky q&a impl.
     //update the account info captured earlier
     let account: Account = this.accountService.getAccount();
-    account.setSecurityQuestions({
+    account.setSecurity({
       'robot': this.securityForm.get('robot').value,
-      'security' : JSON.stringify(this.selectedQuestions)
+      'questions': this.selectedQuestions
     });
 
     this.router.navigate(['confirm']);
