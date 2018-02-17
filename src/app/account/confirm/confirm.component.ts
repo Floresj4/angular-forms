@@ -25,5 +25,4 @@ export class ConfirmComponent implements OnInit {
       this.router.navigate(['signup']);
     }
   }
-
 }
