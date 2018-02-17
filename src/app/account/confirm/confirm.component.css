@@ -6,3 +6,12 @@
   width: 120px;
   display: inline-block;
 }
+
+.confirm-question-answer {
+  padding:10px 10px 0 10px;
+}
+
+/** hacky, but only a learning project... **/
+.confirm-question-answer-bottom {
+  padding-bottom:10px
+}

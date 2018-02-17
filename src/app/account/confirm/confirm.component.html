@@ -13,12 +13,26 @@
       <li class="list-group-item"><h4><span class="confirm-label">Password</span><small>{{ account.hiddenPassword() }}</small></h4></li>
     </ul>
 
-    <div class="page-header">
-      <h4>Security</h4>
+    <div class="panel panel-default confirm-question-answer-bottom">
+      <div class="panel-heading"><span class="glyphicon glyphicon-lock"></span> Security</div>
+
+      <div class="confirm-question-answer">
+        <label>Are you a robot?</label>
+        <input type="text"
+               disabled="true"
+               class="form-control"
+               value="{{ account.securityQuestions.robot }}">
+      </div>
+
+      <div *ngFor="let question of account.securityQuestions.securityQuestions"
+        class="confirm-question-answer">
+        <label>{{ question.question }}</label>
+        <input type="text" disabled="true"
+               class="form-control"
+               [value]="question.answer">
+      </div>
+
     </div>
 
-    <ul class="list-group">
-
-    </ul>
   </div>
 </div>
