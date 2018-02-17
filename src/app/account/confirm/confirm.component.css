@@ -1,3 +1,8 @@
 .confirm-container small {
   margin-left: 10px;
 }
+
+.confirm-label {
+  width: 120px;
+  display: inline-block;
+}
