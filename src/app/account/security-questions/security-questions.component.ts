@@ -67,7 +67,7 @@ export class SecurityQuestionsComponent implements OnInit {
       return null;
     }
 
-    if (this.validRobotResponse.indexOf(control.value) === -1) {
+    if (this.validRobotResponse.indexOf(value) === -1) {
       return {'robotResponse': true};
     }
 
