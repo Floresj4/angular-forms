@@ -54,6 +54,10 @@ export class SecurityQuestionsComponent implements OnInit {
     });
   }
 
+  getSecurityFormControls() {
+    return (<FormArray>this.securityForm.get('securityQuestions')).controls;
+  }
+
   isSubmitDisabled() {
     return !this.securityForm.valid;
   }

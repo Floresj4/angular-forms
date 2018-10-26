@@ -34,7 +34,7 @@
 
         <div class="form-group"
              formArrayName="securityQuestions"
-             *ngFor="let i = index; let question of securityForm.get('securityQuestions').controls">
+             *ngFor="let i = index; let question of getSecurityFormControls()">
 
           <span>Question {{ i + 1}}</span>
 
