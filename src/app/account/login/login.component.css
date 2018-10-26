@@ -4,8 +4,12 @@
 }
 
 .form-action-buttons {
-  width:145px;
+  width:150px;
   margin:0 auto;
+}
+
+.form-action-buttons .btn:first-child {
+  margin-right: 10px;
 }
 
 .sign-in-danger {
