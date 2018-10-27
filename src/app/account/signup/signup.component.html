@@ -5,7 +5,8 @@
       <h3>Sign up</h3>
     </div>
 
-    <form (ngSubmit)="onSubmit(signupForm)" #signupForm="ngForm">
+    <form (ngSubmit)="onSubmit(signupForm)" #signupForm="ngForm"
+      autocomplete="off">
       <!-- ngModel tells angular that a field is an active control of the form -->
       <div class="form-group">
         <label for="firstname">First name</label>
