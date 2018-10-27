@@ -81,9 +81,11 @@
                required
                ngModel
                #confirmPassword="ngModel">
-        <p class="invalid-field-message" *ngIf="!arePasswordsValid()">
+
+        <p class="invalid-field-message" *ngIf="passwordsAreInvalid()">
           Password fields do not match.
         </p>
+
       </div>
 
       <div class="form-group signup-buttons">
