@@ -14,6 +14,8 @@ export class SignupComponent implements OnInit {
   accountTypes: string[] = ['Basic', 'Advanced', 'Pro'];
   selectedAccountType: string;
 
+  isSubmitEnabled: boolean = false;
+
   @ViewChild('firstname') fieldname;
   @ViewChild('password') password: NgModel;
   @ViewChild('confirmPassword') confirmPassword: NgModel;
@@ -51,31 +53,25 @@ export class SignupComponent implements OnInit {
       'password': 'banana',
       'confirmPassword': 'banana'
     });
+
+    this.isSubmitEnabled = this.arePasswordsValid()
+              && this.signupForm.valid;
+    console.log(this.arePasswordsValid());
+    console.log(this.signupForm.valid);
+    console.log(this.isSubmitEnabled);
   }
 
   onReset() {
-    this.signupForm.reset();
     //default to a pro account :]
+    this.signupForm.reset();
     this.signupForm.form.patchValue({
       'accountType': (this.selectedAccountType = 'Pro')
     });
   }
 
-  isSubmitEnabled() {
-    const enabled: boolean = this.arePasswordsValid()
-              && this.arePasswordsTouched()
-              && this.signupForm.valid;
-
-    return enabled;
-  }
-  
-  arePasswordsTouched() {
-    return (this.password.touched && this.confirmPassword.touched);
-  }
-
   arePasswordsValid() {
-    const pw = this.password.value;
-    const cpw = this.confirmPassword.value;
-    return (pw === cpw && this.arePasswordsTouched());
+    const pw = this.signupForm.form.value.password;
+    const cpw = this.signupForm.form.value.confirmPassword;
+    return (pw === cpw && (pw !== '' && cpw !== ''));
   }
 }

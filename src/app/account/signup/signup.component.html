@@ -81,7 +81,7 @@
                required
                ngModel
                #confirmPassword="ngModel">
-        <p class="invalid-field-message" *ngIf="!arePasswordsValid() && arePasswordsTouched()">
+        <p class="invalid-field-message" *ngIf="!arePasswordsValid()">
           Password fields do not match.
         </p>
       </div>
@@ -89,7 +89,7 @@
       <div class="form-group signup-buttons">
         <button type="submit"
                 class='btn btn-primary'
-                [disabled]="!isSubmitEnabled()">Submit</button>
+                [disabled]="!isSubmitEnabled">Submit</button>
 
         <button type="button"
                 class="btn btn-warning"
