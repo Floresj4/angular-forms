@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewChild, AfterViewChecked, AfterViewInit, AfterContentInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterContentChecked } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../account.service';
@@ -9,14 +9,15 @@ import { Account } from '../account.model';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit, OnChanges, AfterViewChecked, AfterViewInit, AfterContentInit, AfterContentChecked {
+export class SignupComponent implements OnInit, AfterContentChecked {
 
   accountTypes: string[] = ['Basic', 'Advanced', 'Pro'];
   selectedAccountType: string;
 
+  isAutoFilled: boolean = false;
   isSubmitEnabled: boolean = false;
-  isAutofilled: boolean = false;
   isFormInitialized: boolean = false;
+
   @ViewChild('firstname') fieldname;
   @ViewChild('password') password: NgModel;
   @ViewChild('confirmPassword') confirmPassword: NgModel;
@@ -24,44 +25,19 @@ export class SignupComponent implements OnInit, OnChanges, AfterViewChecked, Aft
 
   constructor(private account: AccountService, private router: Router) { }
 
-  ngOnChanges(){
-    console.log('ngOnChanges');
-  }
-
   ngOnInit() {
-    console.log('ngOnInit');
     this.selectedAccountType = 'Pro';
     this.isFormInitialized = true;
   }
- 
-  ngDoCheck() {
-    console.log('ngDoCheck');
-  }
-
-  ngAfterContentInit() {
-    console.log('ngAfterContentInit');
-  }
 
   ngAfterContentChecked() {
-    console.log('ngAfterContentChecked');
+    this.isSubmitEnabled = this.signupForm.valid
+      && !this.passwordsAreInvalid();
   } 
-
-  ngAfterViewInit() {
-    console.log('ngAfterViewInit');
-  }
-
-  ngAfterViewChecked() {
-    console.log('ngAfterViewChecked');
-  }
-
-  ngOnDestroy() {
-    console.log('ngOnDestroy');
-  }
 
   onSubmit(signupForm: NgForm) {
 
     if(signupForm.valid) {
-
       this.account.confirm(new Account(
         signupForm.value.firstname,
         signupForm.value.lastname,
@@ -76,7 +52,7 @@ export class SignupComponent implements OnInit, OnChanges, AfterViewChecked, Aft
   }
 
   onAutofill() {
-    this.isAutofilled = true;
+    this.isAutoFilled = true;
     this.signupForm.form.setValue({
       'firstname': 'test',
       'lastname': 'user',
@@ -85,29 +61,19 @@ export class SignupComponent implements OnInit, OnChanges, AfterViewChecked, Aft
       'password': 'banana',
       'confirmPassword': 'banana'
     });
-
-    this.isSubmitEnabled = this.isAutofilled
-      || (this.passwordsAreInvalid())
-        && this.signupForm.valid;
-    // console.log(this.passwordsAreInvalid());
-    // console.log(this.signupForm.valid);
-    // console.log(this.isSubmitEnabled);
   }
 
   onReset() {
-    this.isAutofilled = false;
+    this.isAutoFilled = false;
 
-    //default to a pro account :]
     this.signupForm.reset();
     this.signupForm.form.patchValue({
+      //default to a pro account :]
       'accountType': (this.selectedAccountType = 'Pro')
     });
   }
 
   passwordsAreInvalid() {
-    console.log('\t> passwordsAreInvalid');
-    console.log('\t\t> ' + this.arePasswordsTouched());
-
     if(this.arePasswordsTouched()) {
 
       return this.signupForm.form.value.password
