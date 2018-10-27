@@ -2,28 +2,6 @@
 
 [![Build Status](https://travis-ci.org/Floresj4/angular-forms.svg?branch=master)](https://travis-ci.org/Floresj4/angular-forms)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.4.
+A simulated web application authentication form.  This form sends no out-going requests, but is instead intended to exercise web forms with the Angular5+ framework.  Template driven and Reactive forms used to create a mock account.  The initial sign up button begins the account creation process - an autofill button is provided to quick populate all fields.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
