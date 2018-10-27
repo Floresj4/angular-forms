@@ -1,7 +1,11 @@
 .signup-buttons {
-  width:140px;
+  width:145px;
   margin-left:auto;
   margin-right:auto;
+}
+
+.signup-buttons .btn:first-child {
+  margin-right: 10px;
 }
 
 .home-link {
