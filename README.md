@@ -1,4 +1,6 @@
-# AngularForms
+# AngularForms 
+
+[![Build Status](https://travis-ci.org/Floresj4/angular-forms.svg?branch=master)](https://travis-ci.org/Floresj4/angular-forms)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.4.
 
