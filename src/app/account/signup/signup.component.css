@@ -1,5 +1,5 @@
 .signup-buttons {
-  width:145px;
+  width:225px;
   margin-left:auto;
   margin-right:auto;
 }
@@ -8,8 +8,6 @@
   margin-right: 10px;
 }
 
-.home-link {
-  display:block;
-  width:85px;
-  margin:0 auto;
+.btn-autofill {
+  margin-left: 10px;
 }

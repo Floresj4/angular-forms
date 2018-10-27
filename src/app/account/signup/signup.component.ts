@@ -42,7 +42,7 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  onReset() {
+  onAutofill() {
     this.signupForm.form.setValue({
       'firstname': 'test',
       'lastname': 'user',
@@ -53,6 +53,14 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  onReset() {
+    this.signupForm.reset();
+    //default to a pro account :]
+    this.signupForm.form.patchValue({
+      'accountType': (this.selectedAccountType = 'Pro')
+    });
+  }
+
   isSubmitEnabled() {
     const enabled: boolean = this.arePasswordsValid()
               && this.arePasswordsTouched()
@@ -60,6 +68,7 @@ export class SignupComponent implements OnInit {
 
     return enabled;
   }
+  
   arePasswordsTouched() {
     return (this.password.touched && this.confirmPassword.touched);
   }
