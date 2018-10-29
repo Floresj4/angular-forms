@@ -12,17 +12,6 @@ export class Account {
               public confirm: string) {
   }
 
-  hiddenPassword() {
-    let hidden = '';
-    const length = this.password.length;
-
-    for (let i = 0; i < length; i++) {
-      hidden += '*';
-    }
-
-    return hidden;
-  }
-
   setSecurity(security: {}) {
     this.security = security;
   }

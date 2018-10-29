@@ -1,38 +1,30 @@
-<div class="row" *ngIf="account != null">
-  <div class="confirm-container">
-
+<div class="confirm-container">
+  <div class="row" *ngIf="account != null">
+  
     <div class="page-header">
-      <h3><span class="glyphicon glyphicon-ok"></span> Confirm Account</h3>
+      <h3><span class="glyphicon glyphicon-ok"></span> Account Info</h3>
     </div>
 
     <ul class="list-group">
-      <li class="list-group-item"><h4><span class="confirm-label">First name</span><small>{{ account.firstname }}</small></h4></li>
-      <li class="list-group-item"><h4><span class="confirm-label">Last name</span><small>{{ account.lastname }}</small></h4></li>
-      <li class="list-group-item"><h4><span class="confirm-label">Account type</span><small>{{ account.accountType }}</small></h4></li>
-      <li class="list-group-item"><h4><span class="confirm-label">Email</span><small>{{ account.email }}</small></h4></li>
-      <li class="list-group-item"><h4><span class="confirm-label">Password</span><small>{{ account.hiddenPassword() }}</small></h4></li>
+      <li class="list-group-item">First name<small>{{ account.firstname }}</small></li>
+      <li class="list-group-item">Last name<small>{{ account.lastname }}</small></li>
+      <li class="list-group-item">Account type<small>{{ account.accountType }}</small></li>
+      <li class="list-group-item">Email<small>{{ account.email }}</small></li>
+      <li class="list-group-item">Password<small>{{ account.password }}</small></li>
     </ul>
 
-    <div class="panel panel-default confirm-question-answer-bottom">
-      <div class="panel-heading"><span class="glyphicon glyphicon-lock"></span> Security</div>
+  </div>
 
-      <div class="confirm-question-answer">
-        <label>Are you a robot?</label>
-        <input type="text"
-               disabled="true"
-               class="form-control"
-               value="{{ account.security.robot }}">
-      </div>
+  <div class='row'>
+    <h3><span class="glyphicon glyphicon-ok"></span> Security Questions</h3>
 
-      <div *ngFor="let q of account.security.questions"
-        class="confirm-question-answer">
-        <label>{{ q.question }}</label>
-        <input type="text" disabled="true"
-               class="form-control"
-               [value]="q.answer">
-      </div>
-
-    </div>
+    <ul class="list-group">
+      <li class='list-group-item'>Are you a robot?<small>{{ account.security.robot }}</small></li>
+      <li class='list-group-item'
+        *ngFor="let q of account.security.questions">
+        {{ q.question }}
+        <small>{{ q.answer }}</small></li>
+    </ul>
 
   </div>
 </div>
