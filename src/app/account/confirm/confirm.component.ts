@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class ConfirmComponent implements OnInit {
 
-  account: Account;
+  account: {};
 
   constructor(private accountService: AccountService,
               private router: Router) { }
@@ -24,5 +24,13 @@ export class ConfirmComponent implements OnInit {
     if(this.account == null) {
       this.router.navigate(['signup']);
     }
+  }
+
+  getRobotResponse() {
+    return this.account['security']['robot'];
+  }
+
+  getSecurityQuestions() {
+    return this.account['security']['questions'];
   }
 }

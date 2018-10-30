@@ -19,12 +19,19 @@
     <h3><span class="glyphicon glyphicon-ok"></span> Security Questions</h3>
 
     <ul class="list-group">
-      <li class='list-group-item'>Are you a robot?<small>{{ account.security.robot }}</small></li>
+      <li class='list-group-item'>Are you a robot?<small>{{ getRobotResponse() }}</small></li>
       <li class='list-group-item'
-        *ngFor="let q of account.security.questions">
+        *ngFor="let q of getSecurityQuestions()">
         {{ q.question }}
         <small>{{ q.answer }}</small></li>
     </ul>
+
+    <div class='form-group'>
+      <ul class='login-nav-links'>
+        <li><a href='https://github.com/floresj4/angular-forms'>View source code on github</a></li>
+        <li><a href='https://floresj4.com'>Check out floresj4.com</a></li>
+      </ul>
+    </div>
 
   </div>
 </div>

@@ -4,14 +4,13 @@ import {Account} from './account.model';
 @Injectable()
 export class AccountService {
 
-  account: Account;
+  account: {};
 
   constructor() {
 
   }
 
-  confirm(account: Account) {
-    console.log(JSON.stringify(account));
+  confirm(account: {}) {
     this.account = account;
   }
 

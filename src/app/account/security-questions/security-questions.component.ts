@@ -141,11 +141,11 @@ export class SecurityQuestionsComponent implements OnInit {
 
     //build a separate object to work around the hacky q&a impl.
     //update the account info captured earlier
-    let account: Account = this.accountService.getAccount();
-    account.setSecurity({
+    let account = this.accountService.getAccount();
+    account['security'] = {
       'robot': this.securityForm.get('robot').value,
       'questions': this.selectedQuestions
-    });
+    };
 
     this.router.navigate(['confirm']);
   }
