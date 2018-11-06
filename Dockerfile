@@ -1,4 +1,4 @@
-from centos
+FROM centos
 
 #install extract packages for enterprise linux
 #and nodejs
