@@ -18,3 +18,21 @@ ng build --aot --prod --base-href=/angular-forms/
 
 Builds the project with the production flag (although no production specific configurations), ahead-of-time compilation, and the base-href configured as /angular-forms/.  The base-href is configured as /angular-forms/ to support github pages hosting, see URL above.
 
+### Building the Docker image
+
+_Dockerfile_ contains a simple set of commands to 1) pull the latest Centos distribution, 2) yum install the required hosting tools, 3) move the compiled distribution to the filesystem, and 4) expose the internal hosting port and define the image entrypoint. The ENTRYPOINT configuration allows the built Docker image to be run as an executable.
+
+The image can be built using the command
+
+```python
+#-t ngformex defines a tag to identify the image
+docker build -t ngformex .
+```
+
+The image can be executed using
+
+```
+docker run -p 4300:4300
+```
+
+and accessed via localhost:4300/angular-forms/
